@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_ui_auth/firebase_ui_auth.dart';  
+import 'services/signup_service.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -13,15 +12,40 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage>{
   var _passwordVisible;
-  // final _usernameController;
-  // final _passwordController
-  // final _emailController;
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordConfirmController = TextEditingController();
+
+  var errorMessage;
+
+  
 
 
   @override
   void initState(){
     super.initState();
     _passwordVisible = false;
+  }
+
+  @override
+  void Signup() async {
+    final _signupService = SignupService();
+    String? result = await _signupService.signup(
+      username: _usernameController.text.trim(),
+      email: _emailController.text.trim(),
+      password: _passwordController.text,
+      passwordConfirm: _passwordConfirmController.text,
+    );
+
+    if(result == null){
+      GoRouter.of(context).pushReplacement('/login');
+    }else{
+      setState(() {
+        errorMessage = result;
+      });
+      print("Error: $result");
+    }
   }
 
   @override 
@@ -60,6 +84,7 @@ class _SignupPageState extends State<SignupPage>{
               Column(
                 children: <Widget>[
                   TextField(
+                    controller: _usernameController,
                     decoration: InputDecoration(
                       hintText: 'Username',
                       border: OutlineInputBorder(
@@ -80,6 +105,7 @@ class _SignupPageState extends State<SignupPage>{
                   const SizedBox(height: 20),
 
                   TextField(
+                    controller: _emailController,
                     decoration: InputDecoration(
                       hintText: 'Email address',
                       border: OutlineInputBorder(
@@ -98,6 +124,7 @@ class _SignupPageState extends State<SignupPage>{
 
                   const SizedBox(height: 20,),
                   TextField(
+                      controller: _passwordController,
                       decoration: InputDecoration(
                         hintText: "Password",
                         border: OutlineInputBorder(
@@ -126,6 +153,7 @@ class _SignupPageState extends State<SignupPage>{
                     ),
                     const SizedBox(height: 20,),
                     TextField(
+                      controller: _passwordConfirmController,
                       decoration: InputDecoration(
                         hintText: "Confirm Password",
                         border: OutlineInputBorder(
@@ -158,6 +186,7 @@ class _SignupPageState extends State<SignupPage>{
                 padding: const EdgeInsets.only(top: 3, left: 3),
                 child: ElevatedButton(
                   onPressed: () {
+                    Signup();
                   },
                   style: ElevatedButton.styleFrom(
                     shape: const StadiumBorder(),
@@ -171,6 +200,13 @@ class _SignupPageState extends State<SignupPage>{
                   ),
                 )
               ),
+              if (errorMessage != null)
+                Text(
+                  errorMessage!,
+                  style: TextStyle(color: Colors.red),
+                ),
+
+              
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
