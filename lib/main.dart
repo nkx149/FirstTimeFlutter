@@ -4,24 +4,30 @@ import 'package:go_router/go_router.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'firebase_options.dart';
-import 'package:firebase_ui_auth/firebase_ui_auth.dart';  
 
 import "home.dart";
 import "signup.dart";
 
 import 'package:flutter/material.dart';
+import 'dart:io';
 
 
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
 
+  HttpOverrides.global = MyHttpOverrides(); 
   runApp(const MyApp());
 }
 
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+         (X509Certificate cert, String host, int port) => true;
+  }
+}
 
 class MyApp extends StatelessWidget {
 
@@ -47,7 +53,7 @@ class MyApp extends StatelessWidget {
 }
 
 final GoRouter _router = GoRouter(
-  initialLocation: FirebaseAuth.instance.currentUser != null ? '/' : '/login',
+  initialLocation: '/login',
   routes: [
     GoRoute(
       path: '/login',
