@@ -3,18 +3,10 @@ import 'dart:async';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'widgets/navDrawer.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -39,103 +31,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView(
-                padding: EdgeInsets.zero,
-                children: [
-                  DrawerHeader(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).primaryColor,
-                      gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          Theme.of(context).primaryColor,
-                          Theme.of(context).primaryColor.withValues(),
-                        ],
-                      ),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CircleAvatar(
-                          radius: 30,
-                          backgroundColor: Colors.white,
-                          child: Icon(
-                            Icons.person,
-                            size: 30,
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                          'Demo App',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          'Welcome back!',
-                          style: TextStyle(
-                            color: Colors.white70,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  ListTile(
-                    leading: Icon(Icons.home),
-                    title: Text('Home'),
-
-                    onTap: (){
-
-                      GoRouter.of(context).push('/');
-
-                    },
-                  ),
-
-                  ListTile(
-                    leading: Icon(Icons.person),
-                    title: Text('Profile'),
-
-                    onTap: (){
-                      GoRouter.of(context).push('/profile');
-                    },
-                  ),
-
-                  ListTile(
-                    leading: Icon(Icons.favorite),
-                    title: Text('Favourites'),
-                    onTap: (){
-                    },
-                  ),
-                ],
-              ),
-            ),
-  
-            Spacer(),
-
-            Divider(height: 1),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-              child: ListTile(
-                leading: Icon(Icons.logout),
-                title: Text('Log Out'),
-                onTap: (){
-                  Navigator.pop(context);
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
+      drawer: MyNavDrawer(),
       appBar: AppBar(
         actions: [
           IconButton(
