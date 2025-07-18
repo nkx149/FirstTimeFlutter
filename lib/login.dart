@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_ui_auth/firebase_ui_auth.dart';  
+import 'services/login_service.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -17,10 +16,39 @@ class _LoginPageState extends State<LoginPage>{
   final _passwordController = TextEditingController();
   var _passwordVisible;
 
+  var errorMessage;
+
   @override
   void initState(){
     super.initState();
     _passwordVisible = false;
+  }
+  final storage = FlutterSecureStorage();
+
+  Future<void> debugPrintStoredTokens() async {
+    Map<String, String> allTokens = await storage.readAll();
+    allTokens.forEach((key, value) {
+      print("Stored key: $key, Token: $value");
+    });
+  }
+
+  @override
+  void Login() async{
+    final _loginService = LoginService();
+
+    String? result = await _loginService.login(
+      username: _usernameController.text.trim(),
+      password: _passwordController.text
+    );
+    if(result == null){
+      debugPrintStoredTokens();
+      GoRouter.of(context).pushReplacement('/');
+    }else{
+      setState(() {
+        errorMessage = result;
+      });
+      print("Error: $result");
+    }
   }
   
   @override
@@ -95,7 +123,7 @@ class _LoginPageState extends State<LoginPage>{
         const SizedBox(height: 10,),
         ElevatedButton(
           onPressed: (){
-            GoRouter.of(context).pushReplacement('/');
+            Login();
           },
           style: ElevatedButton.styleFrom(
             shape: const StadiumBorder(),
@@ -105,6 +133,12 @@ class _LoginPageState extends State<LoginPage>{
           ),
           child: const Text("Login", style: TextStyle(fontSize: 20),),
         ),
+        if (errorMessage != null)
+          Text(
+            errorMessage!,
+            style: TextStyle(color: Colors.red),
+          ),
+
       ],
     );
   }
