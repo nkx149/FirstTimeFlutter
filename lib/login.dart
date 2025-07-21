@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'services/login_service.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import "models/login_response_dto.dart";
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -32,22 +33,26 @@ class _LoginPageState extends State<LoginPage>{
     });
   }
 
-  @override
+
   void Login() async{
     final _loginService = LoginService();
 
-    String? result = await _loginService.login(
-      username: _usernameController.text.trim(),
-      password: _passwordController.text
-    );
-    if(result == null){
-      debugPrintStoredTokens();
-      GoRouter.of(context).pushReplacement('/');
-    }else{
+    try{
+      final result = await _loginService.login(
+        username: _usernameController.text.trim(),
+        password: _passwordController.text
+      );
+
+      GoRouter.of(context).pushReplacement('/', extra: result);
+    }on LoginFailedExceptions catch (e) {
       setState(() {
-        errorMessage = result;
+        errorMessage = e.message;
       });
-      print("Error: $result");
+    } catch (e) {
+
+      setState(() {
+        errorMessage = 'An unexpected error occurred.';
+      });
     }
   }
   

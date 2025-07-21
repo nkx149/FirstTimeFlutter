@@ -1,8 +1,12 @@
+import 'package:bookshelf/models/login_response_dto.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 class MyNavDrawer extends StatelessWidget {
 
+  final LoginResponseDto dto;
+
+  const MyNavDrawer({Key? key, required this.dto}) : super(key: key);
   @override
   Widget build(BuildContext context){
     return Drawer(
@@ -46,7 +50,7 @@ class MyNavDrawer extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Welcome back!',
+                          'Welcome back! ${dto.username}',
                           style: TextStyle(
                             color: Colors.white70,
                             fontSize: 14,
@@ -62,7 +66,7 @@ class MyNavDrawer extends StatelessWidget {
 
                     onTap: (){
 
-                      GoRouter.of(context).push('/');
+                      GoRouter.of(context).push('/', extra: dto);
 
                     },
                   ),
@@ -72,7 +76,7 @@ class MyNavDrawer extends StatelessWidget {
                     title: Text('Profile'),
 
                     onTap: (){
-                      GoRouter.of(context).push('/profile');
+                      GoRouter.of(context).push('/profile', extra: dto);
                     },
                   ),
 

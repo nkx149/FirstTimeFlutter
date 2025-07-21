@@ -1,4 +1,5 @@
 import 'package:bookshelf/login.dart';
+import 'package:bookshelf/models/login_response_dto.dart';
 import 'package:bookshelf/profile.dart';
 import 'package:go_router/go_router.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -61,7 +62,10 @@ final GoRouter _router = GoRouter(
     ),
     GoRoute(
       path: '/',
-      builder: (context, state) => MyHomePage(),
+      builder: (context, state) {
+        final dto = state.extra as LoginResponseDto;
+        return MyHomePage(dto: dto);
+      },
     ),
     GoRoute(
       path: '/signup',
@@ -69,7 +73,10 @@ final GoRouter _router = GoRouter(
     ),
     GoRoute(
       path: '/profile',
-      builder: (context, state) => ProfilePage(),
+      builder: (context, state) {
+        final dto = state.extra as LoginResponseDto;
+        return ProfilePage(dto: dto);
+      },
     ),
   ]
 );

@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'dart:async';
-import 'package:go_router/go_router.dart';
+import 'package:bookshelf/models/login_response_dto.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'widgets/navDrawer.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+  final LoginResponseDto dto;
+  const MyHomePage({super.key, required this.dto});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -31,7 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: MyNavDrawer(),
+      drawer: MyNavDrawer(dto: widget.dto,),
       appBar: AppBar(
         actions: [
           IconButton(
@@ -383,24 +384,6 @@ class Album {
     };
   }
 }
-
-// Future<Album> fetchAlbum(String query) async{
-//   final albumId = int.tryParse(query);
-  
-//   if (albumId == null){
-//     throw Exception("Please enter a valid id number");
-//   }
-
-//   final response = await http.get(
-//     Uri.parse("https://jsonplaceholder.typicode.com/albums/$query"),
-//   );
-
-//   if (response.statusCode == 200){
-//     return Album.fromJson(jsonDecode(response.body)as Map<String, dynamic>);
-//   } else {
-//     throw Exception('Failed to load album');
-//   }
-// }
 
 class AlbumFetchException implements Exception {
   final String message;
