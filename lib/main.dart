@@ -1,3 +1,4 @@
+import 'package:bookshelf/edit_profile.dart';
 import 'package:bookshelf/login.dart';
 import 'package:bookshelf/models/login_response_dto.dart';
 import 'package:bookshelf/profile.dart';
@@ -52,6 +53,7 @@ class MyApp extends StatelessWidget {
 
 final GoRouter _router = GoRouter(
   initialLocation: '/login',
+  // initialLocation: '/profile',
   routes: [
     GoRoute(
       path: '/login',
@@ -74,6 +76,13 @@ final GoRouter _router = GoRouter(
         final dto = state.extra as LoginResponseDto;
         return ProfilePage(dto: dto);
       },
+    ),
+    GoRoute(
+      path: '/edit-profile',
+      builder: (context, state) {
+        final dto = state.extra as LoginResponseDto;
+        return EditProfilePage(dto: dto);
+      }
     ),
   ]
 );

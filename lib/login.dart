@@ -13,8 +13,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage>{
 
-  final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final _usernameController = TextEditingController(text: 'test3');
+  final _passwordController = TextEditingController(text: '12345');
   var _passwordVisible;
 
   var errorMessage;

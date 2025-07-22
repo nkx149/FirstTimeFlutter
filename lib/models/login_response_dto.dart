@@ -8,7 +8,6 @@ class LoginResponseDto {
   final String? firstName;
   final String? lastName;
   final int? age;
-  final String? gender;
   final String? phoneNumber;
 
   
@@ -23,7 +22,6 @@ class LoginResponseDto {
       required this.firstName,
       required this.lastName,
       required this.age,
-      required this.gender,
       required this.phoneNumber
 
 
@@ -41,7 +39,6 @@ class LoginResponseDto {
       firstName: json['firstName'],
       lastName: json['lastName'],
       age: json['age'],
-      gender: json['gender'],
       phoneNumber: json['phoneNumber'],
     );
   }

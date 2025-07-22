@@ -29,8 +29,7 @@ class SignupService {
           }
         ),
       );
-      print("Signup response code: ${apiResponse.statusCode}");
-      print("Signup response body: ${apiResponse.body}");
+
       if (apiResponse.statusCode >= 200 && apiResponse.statusCode < 300) {
         return null;
       }else {

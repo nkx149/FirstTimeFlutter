@@ -48,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
             tooltip: "Search",
           ),
         ],
-        title: const Text("Bookshelf"),
+        title: const Text("Api Login App"),
       ),
       body: Center(
         child: FutureBuilder<Album>(future: futureAlbum, builder: (context, snapshot){
