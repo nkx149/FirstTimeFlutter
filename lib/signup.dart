@@ -30,8 +30,8 @@ class _SignupPageState extends State<SignupPage>{
 
   @override
   void Signup() async {
-    final _signupService = SignupService();
-    String? result = await _signupService.signup(
+    final signupService = SignupService();
+    String? result = await signupService.signup(
       username: _usernameController.text.trim(),
       email: _emailController.text.trim(),
       password: _passwordController.text,

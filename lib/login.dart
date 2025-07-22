@@ -35,10 +35,10 @@ class _LoginPageState extends State<LoginPage>{
 
 
   void Login() async{
-    final _loginService = LoginService();
+    final loginService = LoginService();
 
     try{
-      final result = await _loginService.login(
+      final result = await loginService.login(
         username: _usernameController.text.trim(),
         password: _passwordController.text
       );

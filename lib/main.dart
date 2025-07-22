@@ -2,9 +2,6 @@ import 'package:bookshelf/login.dart';
 import 'package:bookshelf/models/login_response_dto.dart';
 import 'package:bookshelf/profile.dart';
 import 'package:go_router/go_router.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'firebase_options.dart';
 
 import "home.dart";
 import "signup.dart";

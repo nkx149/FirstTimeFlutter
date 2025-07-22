@@ -6,7 +6,7 @@ class MyNavDrawer extends StatelessWidget {
 
   final LoginResponseDto dto;
 
-  const MyNavDrawer({Key? key, required this.dto}) : super(key: key);
+  const MyNavDrawer({super.key, required this.dto});
   @override
   Widget build(BuildContext context){
     return Drawer(
