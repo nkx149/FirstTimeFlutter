@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'services/signup_service.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -17,7 +17,7 @@ class _SignupPageState extends State<SignupPage>{
   final _emailController = TextEditingController();
   final _passwordConfirmController = TextEditingController();
 
-  var errorMessage;
+  late String? errorMessage;
 
   
 
@@ -28,8 +28,8 @@ class _SignupPageState extends State<SignupPage>{
     _passwordVisible = false;
   }
 
-  @override
-  void Signup() async {
+  
+  void signup() async {
     final signupService = SignupService();
     String? result = await signupService.signup(
       username: _usernameController.text.trim(),
@@ -39,12 +39,13 @@ class _SignupPageState extends State<SignupPage>{
     );
 
     if(result == null){
+      if (!mounted) return;
       GoRouter.of(context).pushReplacement('/login');
     }else{
       setState(() {
         errorMessage = result;
       });
-      print("Error: $result");
+
     }
   }
 
@@ -186,7 +187,7 @@ class _SignupPageState extends State<SignupPage>{
                 padding: const EdgeInsets.only(top: 3, left: 3),
                 child: ElevatedButton(
                   onPressed: () {
-                    Signup();
+                    signup();
                   },
                   style: ElevatedButton.styleFrom(
                     shape: const StadiumBorder(),

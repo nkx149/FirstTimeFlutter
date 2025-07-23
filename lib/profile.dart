@@ -61,61 +61,14 @@ class _ProfilePageState extends State<ProfilePage>{
               child: Column(
                 children: 
                 [
-                  Row(
-                    children: [
-                      Text("Name: ", style: TextStyle(fontWeight: FontWeight.bold, color: ColorScheme.fromSeed(seedColor: Colors.green).primary)),
-                      Text("${dto.firstName} ${dto.lastName}"),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text("Email: ", style: TextStyle(fontWeight: FontWeight.bold, color: ColorScheme.fromSeed(seedColor: Colors.green).primary)),
-                      Text("${dto.email}")
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text("Age: ",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold, color: ColorScheme.fromSeed(seedColor: Colors.green).primary
-                        ),
-                      ),
-                      Text("${dto.age}"),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        "Phone Number: ",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold, color: ColorScheme.fromSeed(seedColor: Colors.green).primary
-                        ),
-                      ),
-                      Text("${dto.phoneNumber}")
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text("Date Joined: ",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold, color: ColorScheme.fromSeed(seedColor: Colors.green).primary
-                        ),
-                      ),
-                      Text("$dateString"),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        "Address: ",
-                        style: TextStyle(
-                        fontWeight: FontWeight.bold, color: ColorScheme.fromSeed(seedColor: Colors.green).primary
-                      )),
-                      Text(
-                        "${dto.address}"
-                      )
-                    ],
-                  ),
+                  _buildFieldRow("Name", "${dto.firstName} ${dto.lastName}"),
+                  _buildFieldRow("Email", dto.email),
+                  _buildFieldRow("Age", "${dto.age}"),
+                  _buildFieldRow("Phone Number", dto.phoneNumber),
+                  _buildFieldRow("Address", dto.address),
+                  _buildFieldRow("Date Joined", dateString),
+                  
+
                   
                 ],
             )
@@ -148,4 +101,17 @@ class _ProfilePageState extends State<ProfilePage>{
 
     );
   }
+}
+
+Widget _buildFieldRow(String fieldName, String? contents) {
+  return Row(
+    children: [
+      Text("$fieldName: ", 
+        style: TextStyle(
+          fontWeight: FontWeight.bold, color: ColorScheme.fromSeed(seedColor: Colors.green).primary,
+        ),
+      ),
+      Text("$contents"),
+    ],
+  );
 }

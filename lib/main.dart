@@ -8,25 +8,25 @@ import "home.dart";
 import "signup.dart";
 
 import 'package:flutter/material.dart';
-import 'dart:io';
+
 
 
 
 Future<void> main() async {
 
-  HttpOverrides.global = MyHttpOverrides(); 
+  // HttpOverrides.global = MyHttpOverrides(); 
   runApp(const MyApp());
 }
 
 
-class MyHttpOverrides extends HttpOverrides {
-  @override
-  HttpClient createHttpClient(SecurityContext? context) {
-    return super.createHttpClient(context)
-      ..badCertificateCallback =
-         (X509Certificate cert, String host, int port) => true;
-  }
-}
+// class MyHttpOverrides extends HttpOverrides {
+//   @override
+//   HttpClient createHttpClient(SecurityContext? context) {
+//     return super.createHttpClient(context)
+//       ..badCertificateCallback =
+//          (X509Certificate cert, String host, int port) => true;
+//   }
+// }
 
 class MyApp extends StatelessWidget {
 

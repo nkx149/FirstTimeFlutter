@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'services/login_service.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import "models/login_response_dto.dart";
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  LoginPageState createState() => LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage>{
+class LoginPageState extends State<LoginPage>{
 
   final _usernameController = TextEditingController(text: 'test3');
   final _passwordController = TextEditingController(text: '12345');
-  var _passwordVisible;
+  late bool _passwordVisible;
 
-  var errorMessage;
+  late String? errorMessage;
 
   @override
   void initState(){
@@ -43,6 +43,7 @@ class _LoginPageState extends State<LoginPage>{
         password: _passwordController.text
       );
 
+      if (!mounted) return;
       GoRouter.of(context).pushReplacement('/', extra: result);
     }on LoginFailedExceptions catch (e) {
       setState(() {

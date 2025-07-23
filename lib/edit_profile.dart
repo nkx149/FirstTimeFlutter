@@ -10,10 +10,10 @@ class EditProfilePage extends StatefulWidget{
   const EditProfilePage({super.key, required this.dto});
 
   @override
-  _EditProfilePageState createState() => _EditProfilePageState();
+  EditProfilePageState createState() => EditProfilePageState();
 }
 
-class _EditProfilePageState extends State<EditProfilePage>{
+class EditProfilePageState extends State<EditProfilePage>{
 
   late TextEditingController firstNameController;
   late TextEditingController lastNameController;
@@ -27,10 +27,10 @@ class _EditProfilePageState extends State<EditProfilePage>{
 
   late Map<String, String?> originalData;
 
-  var _newPasswordVisible;
-  var _confirmPasswordVisible;
+  late bool _newPasswordVisible;
+  late bool _confirmPasswordVisible;
 
-   String? errorMessage;
+  String? errorMessage;
 
   
 
@@ -74,7 +74,7 @@ class _EditProfilePageState extends State<EditProfilePage>{
     super.dispose();
   }
 
-  void SaveChanges() async {
+  void saveChanges() async {
 
     final updateDto = UserUpdateDto(id: widget.dto.id);
     if (firstNameController.text.trim() != originalData['firstName']) {
@@ -117,10 +117,13 @@ class _EditProfilePageState extends State<EditProfilePage>{
       await service.UpdateUser(dto: updateDto);
 
       // Show success feedback
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Profile updated successfully.'), duration: Duration(seconds: 2),),
       );
       await Future.delayed(Duration(seconds: 2));
+
+      if (!mounted) return;
 
       Navigator.pop(context, updateDto);
     } on ApiException catch (e) {
@@ -301,7 +304,7 @@ class _EditProfilePageState extends State<EditProfilePage>{
                     );
                     return; // Don't pop!
                   }
-                  SaveChanges();
+                  saveChanges();
                 }, child: Text("Save Changes")),
               ),
               
